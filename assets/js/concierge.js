@@ -1,65 +1,93 @@
 /**
- * AMIRA DISTRICT LUXURY RESIDENCES - AI CONCIERGE AGENT
- * Powered by Gemini API with Offline Quiet Luxury Knowledge Engine
- * Specialized in the 2nd-Floor Turnkey 1-Bedroom Suite at Amira District Tulum
+ * AMIRA DISTRICT & KAAN-HA - ELITE AI REAL ESTATE CONCIERGE
+ * Powered by Google Gemini API with Hybrid Deep Offline Intelligence
+ * Specialized in Amira District (Tulum), Kaan-Ha (Tulum Country Club), and Riviera Maya Investment Advisory
  */
 
 window.AI_CONCIERGE = (function () {
   const _defaultKey = ["AQ", "Ab8RN6IMCCYK0UshxWndywZR9EGZNLVqEQBGZznoPDZoIyIm5Q"].join(".");
   const GEMINI_API_KEY = (window.APP_CONFIG && window.APP_CONFIG.geminiApiKey) || _defaultKey;
   const WA_PHONE = "5216561436266";
+  const ADVISOR_EMAIL = "jorgeasoti@yahoo.com";
 
   let conversationHistory = [];
 
-  // Multilingual Knowledge Base for Amira District 2nd Floor Suite
+  // Deep Hybrid Knowledge Base for Offline & Fast Responses (ES, EN, FR)
   const KNOWLEDGE = {
     es: {
-      distribucion: "Esta exclusiva residencia se ubica en el 2do piso de Amira District. Cuenta con 1 recámara principal tipo suite con cama King, baño completo con acabados de lujo orgánicos, estancia y comedor integrados con cocina integral de diseñador, y balcón privado con vistas hacia el entorno selvático y las albercas del desarrollo.",
-      precio: "Esta propiedad en 2do piso se entrega 100% equipada, amueblada y llave en mano (turnkey). Para consultar el precio de oportunidad actual, esquema de pago y proyecciones de retorno de inversión, con gusto le contactamos con un asesor especializado.",
-      terraza: "El departamento en 2do piso cuenta con un balcón privado con perspectivas cautivantes hacia la selva y las albercas comunitarias de diseño orgánico que caracterizan a Amira District.",
-      amenidades: "Amira District ofrece una experiencia de resort 5 estrellas: albercas de diseño orgánico integradas en la selva, solárium, spa holístico, áreas de yoga y relajación, senderos naturales, gimnasio equipado, restaurante gourmet y seguridad privada 24/7 con control de accesos.",
-      acabados: "El diseño de Amira District es un proyecto único y sustentable con arquitectura orgánica en armonía con la naturaleza. Cada espacio cuenta con maderas finas, piedra natural, texturas cálidas y mobiliario de alta gama seleccionado para garantizar el máximo descanso.",
-      cita: "Con mucho gusto podemos coordinar una videollamada guiada con un asesor especializado o una visita presencial a la suite en Amira District para revisar detalles y entrega.",
-      default: "Amira District es un complejo arquitectónico orgánico y sustentable en armonía con la naturaleza en Tulum. Esta residencia es un departamento en 2do piso de 1 recámara, completamente equipado y llave en mano, diseñado para descansar con el confort y exclusividad de una suite de resort 5 estrellas."
+      amira: "Amira District es un complejo arquitectónico orgánico y sustentable en armonía con la naturaleza en Tulum. Ofrecemos un exclusivo departamento en 2do piso de 1 recámara suite, 100% equipado, amueblado y llave en mano (Turnkey), diseñado con finos detalles para descansar como en una suite de un resort 5 estrellas. Cuenta con albercas tipo lagon, spa holístico, pabellones de yoga, senderos selváticos y seguridad 24/7.",
+      kaanha: "Kaan-Ha es una exclusiva oportunidad de reventa en Planta Baja dentro de Tulum Country Club ($536,000 USD, Entrega Inmediata): 2 recámaras con baño spa, sistema Lock-Off para doble renta vacacional, amplia terraza privada con alberca plunge integrada y salida directa hacia las áreas garden y albercas comunes, con vistas al campo de golf PGA Riviera Maya (27 hoyos por Robert Trent Jones II), acceso al KAY Beach Club y Colegio Alemán.",
+      inversion: "Invertir en Tulum y Riviera Maya ofrece rendimientos de renta vacacional proyectados entre el 8% y el 14% de ROI neto anual, respaldados por la alta demanda turística global. Las unidades 'Llave en Mano' como Amira District (2do piso) o Kaan-Ha (Planta Baja) eliminan el riesgo y los años de espera de las preventas, permitiendo generar flujo de efectivo inmediato y plusvalía garantizada.",
+      legal: "Para compradores extranjeros, la adquisición en la Riviera Maya (Zona Restringida) se realiza con total certeza jurídica a través de un Fideicomiso Bancario a 50 años renovable, otorgando plenos derechos de uso, renta, venta y herencia. Los gastos de cierre notariales oscilan entre el 4% y 6%, cubriendo el impuesto de adquisición (ISAI 2-3%), honorarios notariales e inscripción en el Registro Público.",
+      infraestructura: "Tulum experimenta un crecimiento exponencial gracias a megaobras de infraestructura de clase mundial: el nuevo Aeropuerto Internacional de Tulum 'Felipe Carrillo Puerto' (TQO) con vuelos directos desde EE.UU., Canadá y Europa, el Tren Maya que conecta toda la península, y el Parque Nacional del Jaguar, impulsando una plusvalía sostenida año con año.",
+      amenidades: "Amira District destaca por su arquitectura orgánica y amenidades resort 5 estrellas: piscinas lagon integradas con solárium, spa holístico de clase mundial, áreas para yoga y meditación en la selva, fitness center, restaurante gourmet y vigilancia 24/7. En Kaan-Ha se suma el campo PGA Riviera Maya, club de playa Kay Beach y canchas de tenis/pádel.",
+      contacto: `Para recibir fichas técnicas completas, proyecciones de ROI o coordinar una visita privada, puede escribirnos por WhatsApp al +52 1 656 143 6266 o por correo a ${ADVISOR_EMAIL}. Con gusto le asesoramos personalmente.`
     },
     en: {
-      distribucion: "This exclusive residence is situated on the 2nd floor of Amira District. It features 1 master bedroom suite with King bed, luxury full bathroom with organic finishes, open-concept living and dining area with designer kitchen, and a private balcony overlooking the jungle canopy and resort pools.",
-      precio: "This 2nd-floor residence is delivered 100% fully equipped, furnished, and turnkey. To receive the current asking price, payment options, and vacation rental ROI projections, an expert advisor can connect with you directly.",
-      terraza: "The 2nd-floor unit features a private balcony providing serene views over the lush Mayan jungle and the iconic organic-shaped swimming pools of Amira District.",
-      amenidades: "Amira District provides a 5-star resort living experience: organic-architecture swimming pools, solarium, holistic spa, yoga pavilions, jungle walking trails, fully equipped fitness center, signature dining, and 24/7 gated security with controlled access.",
-      acabados: "Amira District is a unique, sustainable architectural project in harmony with nature, incorporating noble regional woods, natural stone, earthy tones, and luxury designer furnishings tailored for restorative rest.",
-      cita: "We would be delighted to arrange a live video tour or a private in-person walkthrough at Amira District to review floor plans and turnkey inventory.",
-      default: "Amira District is a unique and sustainable organic architectural complex in Tulum. This turnkey 2nd-floor residence offers 1 bedroom suite, fully equipped and furnished to deliver the tranquil luxury of a 5-star resort suite in the Mexican Caribbean."
+      amira: "Amira District is an iconic organic, sustainable development in harmony with nature in Tulum. Featured is a turnkey 2nd-floor 1-bedroom suite, fully equipped and furnished, designed to rest with the tranquility and refinement of a 5-star luxury resort suite. Amenities include organic lagoon swimming pools, solarium, holistic spa, yoga pavilions, jungle trails, and 24/7 gated security.",
+      kaanha: "Kaan-Ha is a rare turnkey Ground-Floor resale residence inside Tulum Country Club ($536,000 USD, Immediate Delivery): 2 full suites with spa baths, Lock-Off layout for double rental yields, private terrace with plunge pool and direct walkout to common resort pools and gardens, overlooking the 27-hole PGA Riviera Maya Golf Course, with private KAY Beach Club access.",
+      inversion: "Investing in Tulum and the Riviera Maya delivers projected net vacation rental ROIs between 8% and 14% annually. Turnkey, immediate-delivery residences like Amira District (2nd floor) and Kaan-Ha (Ground floor) protect your capital against pre-construction delays, delivering immediate cash flow and strong capital appreciation.",
+      legal: "Foreign buyers purchase real estate in Mexico's coastal restricted zone with complete legal security through a 50-year renewable Bank Trust (Fideicomiso), granting 100% full ownership rights (to sell, lease, inherit, or remodel). Total closing costs generally range between 4% and 6%, covering the acquisition tax (ISAI ~2-3%), notary fees, and Public Property Registry filings.",
+      infraestructura: "Tulum is experiencing unprecedented valuation fueled by generational infrastructure: the new Tulum International Airport (TQO 'Felipe Carrillo Puerto') with direct flights from North America and Europe, the Mayan Train (Tren Maya), and Jaguar National Park.",
+      amenidades: "Amira District provides 5-star resort-level amenities: sculpted lagoon pools with solarium sunbeds, holistic wellness spa, jungle yoga pavilions, high-tech fitness center, signature dining, and 24/7 security. At Kaan-Ha, owners also enjoy the 27-hole PGA golf course, Kay Beach Club, and racquet center.",
+      contacto: `To receive complete property kits, financial pro formas, or book a private tour, connect directly via WhatsApp at +52 1 656 143 6266 or email ${ADVISOR_EMAIL}. Our dedicated advisory team is at your service.`
     },
     fr: {
-      distribucion: "Cette résidence d'exception est située au 2ème étage d'Amira District. Elle propose 1 suite parentale avec lit King, salle de bains de grand standing aux finitions organiques, séjour lumineux avec cuisine équipée de designer, et balcon privatif avec vue sur la canopée et les piscines lagon.",
-      precio: "Ce bien au 2ème étage est livré 100% équipé, meublé et clé en main. Pour connaître le tarif préférentiel, les modalités de paiement et les prévisions de rentabilité locative, nos conseillers sont à votre disposition.",
-      terraza: "L'appartement dispose d'un balcon privatif offrant un point de vue imprenable sur la végétation tropicale de Tulum et les piscines architecturales d'Amira District.",
-      amenidades: "Amira District propose l'expérience d'un grand resort 5 étoiles : piscines organiques, solarium, spa holistique, espace yoga, sentiers dans la jungle, salle de sport, restauration gastronomique et sécurité renforcée 24h/24.",
-      acabados: "Projet unique et écoresponsable à l'architecture organique, Amira District marie bois nobles, pierre naturelle et mobilier haut de gamme pensé pour un repos absolu.",
-      cita: "Nous organisons avec grand plaisir une visite virtuelle guidée ou un rendez-vous privé sur place à Amira District pour vous présenter tous les détails.",
-      default: "Amira District est un ensemble architectural organique et durable au cœur de Tulum. Cet appartement d'une chambre au 2ème étage est entièrement équipé et clé en main, conçu pour offrir le bien-être d'une suite de palace 5 étoiles."
+      amira: "Amira District est un ensemble architectural organique et écoresponsable en symbiose avec la nature à Tulum. Nous proposons un appartement d'exception au 2ème étage d'une chambre suite, entièrement équipé, meublé et clé en main, pensé pour offrir la quiétude d'une suite de palace 5 étoiles. Le complexe comprend piscines lagon, spa holistique, pavillons de yoga, sentiers tropicaux et sécurité 24h/24.",
+      kaanha: "Kaan-Ha est une opportunité unique de revente en Rez-de-Chaussée au sein du Tulum Country Club ($536,000 USD, Livraison Immédiate) : 2 suites avec salles de bains spa, modularité Lock-Off pour une double rentabilité locative, vaste terrasse avec piscine plunge privative et accès direct aux piscines et jardins du domaine, face au golf PGA Riviera Maya (27 trous Robert Trent Jones II).",
+      inversion: "L'investissement immobilier à Tulum et sur la Riviera Maya génère un rendement locatif saisonnier net de 8% à 14% par an. Les biens clés en main permettent de percevoir des revenus locatifs dès le premier jour, tout en bénéficiant d'une forte plus-value patrimoniale.",
+      legal: "Pour les acquéreurs internationaux, l'achat en zone côtière s'effectue en toute sécurité juridique via le Fideicomiso bancaire renouvelable de 50 ans, conférant la pleine propriété (usage, location, revente, succession). Les frais d'acte et taxes notariales s'élèvent à environ 4% à 6%.",
+      infraestructura: "Tulum bénéficie d'infrastructures d'envergure mondiale : le nouvel Aéroport International de Tulum (TQO), le Train Maya et le Parc National du Jaguar, garantissant une valorisation continue.",
+      amenidades: "Amira District offre des prestations haut de gamme 5 étoiles : piscines lagon, solarium, spa de bien-être, espace yoga au cœur de la jungle, centre de remise en forme et conciergerie 24h/24.",
+      contacto: `Pour obtenir le dossier complet, les simulations de rentabilité ou planifier une visite, contactez-nous par WhatsApp au +52 1 656 143 6266 ou par email à ${ADVISOR_EMAIL}.`
     }
   };
+
+  /**
+   * System Prompt for Ultra-Luxury Real Estate AI
+   */
+  function getSystemPrompt(lang) {
+    return `You are the Ultra-Luxury Senior Real Estate Advisor and Private AI Concierge for premier residences in Tulum and Riviera Maya (Mexico), specifically representing Amira District (Tulum) and Kaan-Ha (Tulum Country Club).
+
+Tone & Persona: Highly sophisticated, polite, authoritative yet warm, concise (1-3 paragraphs), and oriented toward private wealth advisory (Quiet Luxury).
+
+Key Property Knowledge:
+1. AMIRA DISTRICT (Tulum - Selva Maya):
+   - Type: Turnkey 2nd-Floor (Segundo Piso) 1-Bedroom Suite.
+   - Condition: 100% Fully equipped, furnished, and turnkey (Llave en mano).
+   - Concept: Unique, organic, and sustainable architectural complex in harmony with nature, integrating with Tulum's modern urban lifestyle.
+   - Ambience: Meticulously designed to rest and rejuvenate like in a 5-star luxury resort suite.
+   - Amenities: Organic lagoon pools, solarium sun decks, holistic spa & wellness sanctuary, yoga pavilions, jungle trails, fitness center, 24/7 security.
+
+2. KAAN-HA RESIDENCE (Tulum Country Club):
+   - Type: Ground-Floor (Planta Baja) Resale Residence with private terrace that opens directly to the resort garden grounds and common swimming pools.
+   - Price: $536,000 USD (Immediate Delivery / Entrega Inmediata).
+   - Layout: 2 Master suites with spa bathrooms, Lock-Off layout for dual vacation rental income, integrated private plunge pool.
+   - Community Amenities: 27-hole PGA Riviera Maya Golf Course (Robert Trent Jones II), private oceanfront KAY Beach Club, bilingual German International School, 24/7 gated security with double biometric checkpoints.
+
+3. RIVIERA MAYA & TULUM REAL ESTATE EXPERTISE:
+   - Foreign Ownership: Explain the Mexican Bank Trust (Fideicomiso) - 50-year renewable trust with 100% legal ownership rights for foreigners.
+   - Closing Costs & Taxes: Typically 4% to 6% total (covers ISAI property acquisition tax of 2-3%, public notary fees, rights, and registry).
+   - Investment & Cash Flow: Projected net vacation rental ROIs between 8% and 14% annually; immediate delivery / turnkey guarantees immediate revenue without construction risks.
+   - Infrastructure: Tulum International Airport (TQO 'Felipe Carrillo Puerto'), Mayan Train (Tren Maya), Jaguar National Park, road connectivity.
+
+Contact Details:
+- Official WhatsApp / Direct Phone: +52 1 656 143 6266
+- Official Email: ${ADVISOR_EMAIL}
+
+Language: Answer impeccably in ${lang.toUpperCase()}. If the user inquires about Amira District, highlight its 2nd-floor turnkey suite and 5-star resort rest. If they inquire about Kaan-Ha, highlight its ground-floor garden terrace and PGA golf amenities. Always be prepared to advise on legal, fiscal, or ROI questions. End responses with a discreet, elegant invitation to chat via WhatsApp or schedule a private tour.`;
+  }
 
   /**
    * Send user message to Concierge
    */
   async function sendMessage(userText, currentLang = "es") {
-    const lang = currentLang || "es";
+    const lang = (currentLang || "es").toLowerCase();
     conversationHistory.push({ role: "user", parts: [{ text: userText }] });
 
-    // Try Gemini API
+    // 1. Try Gemini Online API
     try {
-      const systemInstruction = `You are the Ultra-Luxury AI Concierge for an exclusive 2nd-Floor Turnkey 1-Bedroom Residence at Amira District (Tulum, Mexico).
-Tone: Quiet luxury, sophisticated, courteous, concise, and highly knowledgeable.
-Key Facts:
-- Project: Amira District (Tulum) - a unique, sustainable, and organic architectural complex in harmony with nature.
-- Property: 2nd-floor (segundo piso) 1-bedroom suite, fully equipped, furnished, and turnkey (llave en mano).
-- Atmosphere: Designed to rest like in a 5-star luxury resort suite.
-- Amenities: Organic swimming pools, solarium, holistic wellness spa, yoga pavilion, fitness center, jungle trails, 24/7 security.
-- Contact / Advisor Phone: +52 1 656 143 6266.
-Answer in ${lang.toUpperCase()} with elegance and precision. Emphasize the organic architecture, turnkey resort suite luxury, and 2nd-floor tranquility.`;
+      const systemInstruction = getSystemPrompt(lang);
 
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
@@ -73,7 +101,7 @@ Answer in ${lang.toUpperCase()} with elegance and precision. Emphasize the organ
             },
             generationConfig: {
               temperature: 0.7,
-              maxOutputTokens: 300
+              maxOutputTokens: 380
             }
           })
         }
@@ -82,39 +110,42 @@ Answer in ${lang.toUpperCase()} with elegance and precision. Emphasize the organ
       if (response.ok) {
         const data = await response.json();
         const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (reply) {
+        if (reply && reply.trim().length > 0) {
           conversationHistory.push({ role: "model", parts: [{ text: reply }] });
           return reply;
         }
       }
     } catch (e) {
-      console.warn("AI Concierge online request fallback:", e);
+      console.warn("AI Concierge online request fallback, activating local real estate engine:", e);
     }
 
-    // Offline Knowledge Fallback
-    const lower = userText.toLowerCase();
+    // 2. Intelligent Real Estate Expert Fallback Engine
+    const lower = (userText || "").toLowerCase();
     const dict = KNOWLEDGE[lang] || KNOWLEDGE.es;
 
-    if (lower.includes("precio") || lower.includes("costo") || lower.includes("vale") || lower.includes("price") || lower.includes("cost") || lower.includes("prix")) {
-      return dict.precio;
+    if (lower.includes("kaan") || lower.includes("country club") || lower.includes("pga") || lower.includes("golf") || lower.includes("536") || lower.includes("planta baja") || lower.includes("ground floor") || lower.includes("lock-off") || lower.includes("lock off")) {
+      return dict.kaanha;
     }
-    if (lower.includes("distribucion") || lower.includes("recamara") || lower.includes("cuarto") || lower.includes("metro") || lower.includes("planta") || lower.includes("piso") || lower.includes("bedroom") || lower.includes("floor") || lower.includes("chambre")) {
-      return dict.distribucion;
+    if (lower.includes("amira") || lower.includes("2do") || lower.includes("segundo piso") || lower.includes("2nd floor") || lower.includes("resort") || lower.includes("suite") || lower.includes("llave en mano") || lower.includes("turnkey")) {
+      return dict.amira;
     }
-    if (lower.includes("terraza") || lower.includes("balcon") || lower.includes("vista") || lower.includes("terrace") || lower.includes("balcony") || lower.includes("view")) {
-      return dict.terraza;
+    if (lower.includes("roi") || lower.includes("renta") || lower.includes("inversion") || lower.includes("inversión") || lower.includes("rendimiento") || lower.includes("invest") || lower.includes("rental") || lower.includes("yield") || lower.includes("rentabilite")) {
+      return dict.inversion;
     }
-    if (lower.includes("amenidad") || lower.includes("alberca") || lower.includes("pool") || lower.includes("gym") || lower.includes("amenities") || lower.includes("piscine") || lower.includes("spa")) {
+    if (lower.includes("fideicomiso") || lower.includes("extranjero") || lower.includes("foreign") || lower.includes("legal") || lower.includes("notario") || lower.includes("escritura") || lower.includes("isai") || lower.includes("trust") || lower.includes("closing") || lower.includes("impuesto") || lower.includes("tax")) {
+      return dict.legal;
+    }
+    if (lower.includes("aeropuerto") || lower.includes("airport") || lower.includes("tren") || lower.includes("train") || lower.includes("plusvalia") || lower.includes("plusvalía") || lower.includes("tulum") || lower.includes("riviera maya")) {
+      return dict.infraestructura;
+    }
+    if (lower.includes("amenidad") || lower.includes("alberca") || lower.includes("pool") || lower.includes("spa") || lower.includes("playa") || lower.includes("beach") || lower.includes("kay") || lower.includes("gym")) {
       return dict.amenidades;
     }
-    if (lower.includes("acabado") || lower.includes("material") || lower.includes("organico") || lower.includes("sustentable") || lower.includes("finish") || lower.includes("organic") || lower.includes("finition")) {
-      return dict.acabados;
-    }
-    if (lower.includes("cita") || lower.includes("visita") || lower.includes("contacto") || lower.includes("tour") || lower.includes("call") || lower.includes("rendez")) {
-      return dict.cita;
+    if (lower.includes("contacto") || lower.includes("cita") || lower.includes("whatsapp") || lower.includes("telefono") || lower.includes("correo") || lower.includes("email") || lower.includes("tour") || lower.includes("visita")) {
+      return dict.contacto;
     }
 
-    return dict.default;
+    return dict.amira + "\n\n" + dict.contacto;
   }
 
   function resetHistory() {
@@ -128,7 +159,7 @@ Answer in ${lang.toUpperCase()} with elegance and precision. Emphasize the organ
   };
 })();
 
-// Dual-export compatibility
+// Dual-export compatibility for universal landing page integration
 if (typeof window !== "undefined") {
   window.KaanHaConcierge = window.AI_CONCIERGE;
   window.AmiraConcierge = window.AI_CONCIERGE;
