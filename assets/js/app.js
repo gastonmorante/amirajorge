@@ -650,7 +650,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         } catch (err) {
           removeTypingIndicator(typingIndicator);
-          appendMessage("assistant", "Con gusto puedo brindarle información sobre la distribución, la terraza privada y el club de golf PGA. ¿Gusta que le enviemos el dossier por WhatsApp?");
+          appendMessage("assistant", "Con gusto puedo brindarle información detallada sobre el departamento en 2do piso, los acabados llave en mano y las amenidades de Amira District. ¿Gusta que le enviemos el dossier por WhatsApp?");
         }
       });
     }
