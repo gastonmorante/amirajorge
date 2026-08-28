@@ -1,0 +1,18 @@
+{
+  "name": "amira-district-landing",
+  "version": "1.0.0",
+  "description": "Ultra-Luxury Trilingual Landing Page for Amira District Tulum",
+  "main": "index.html",
+  "scripts": {
+    "dev": "serve . -p 3000",
+    "start": "serve ."
+  },
+  "keywords": [
+    "tulum",
+    "amira-district",
+    "luxury-real-estate",
+    "quiet-luxury"
+  ],
+  "author": "Antigravity",
+  "license": "UNLICENSED"
+}

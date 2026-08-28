@@ -1,0 +1,20 @@
+# Large Raw Media Files (Source Footage & Camera Exports)
+/Pictures exported/
+/Videos/
+/Fotos 360/
+/Fotos para editar/
+/Insta360/
+/osmo/
+/Tomas nuevas/
+/voz en off/
+*.mp3
+*.MP4
+*.mp4
+!assets/videos/*.mp4
+
+# OS & Environment
+.DS_Store
+Thumbs.db
+node_modules/
+.env
+.env.local
