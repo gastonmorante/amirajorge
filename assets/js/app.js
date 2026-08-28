@@ -538,11 +538,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateCarouselCaptions(lang) {
-    if (!carouselCaption) return;
-    const dict = window.I18N_DATA[lang] || window.I18N_DATA.es;
-    const slides = dict.gallery_slides || [];
-    const text = slides[currentSlide] || `Fotografía ${currentSlide + 1}`;
-    carouselCaption.textContent = text;
+    if (carouselCaption) {
+      carouselCaption.textContent = "";
+      carouselCaption.style.display = "none";
+    }
   }
   window.updateCarouselCaptions = updateCarouselCaptions;
 

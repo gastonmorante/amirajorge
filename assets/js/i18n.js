@@ -71,7 +71,7 @@ window.I18N_DATA = {
     "tour_cta_agent": "Agendar Videollamada Guiada VIP",
     "gallery_tag": "Galería Fotográfica",
     "gallery_title": "Perspectivas de Amira District",
-    "gallery_subtitle": "Explore la colección completa de 43 fotografías de autor de la residencia, la terraza privada y las amenidades.",
+    "gallery_subtitle": "Explore la colección fotográfica oficial del departamento en segundo piso y las amenidades de Amira District.",
     "gallery_expand": "Pantalla Completa",
     "gallery_slides": [
       "Acceso Exterior & Fachada Contemporánea Amira District",
