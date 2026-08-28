@@ -8,7 +8,7 @@
   const CONFIG = {
     waPhone: "5216561436266",
     secondaryEmail: "jorgeasoti@yahoo.com",
-    brokerDriveUrl: "https://drive.google.com/drive/folders/117KmtcFGP-uAGCj3u2qxOBzJzZiqbcYk?usp=drive_link",
+    brokerDriveUrl: "https://drive.google.com/drive/folders/1-1lQUKDJUjOG8IR916ZWF031M3zbm1Fb?usp=drive_link",
     videosDriveUrl: "https://drive.google.com/drive/folders/1WSlCQ9Dsir0QrfBeMecjYhyk69kAwNDr?usp=drive_link",
     ghlWebhookUrl: "https://services.leadconnectorhq.com/hooks/catch/custom-amira-webhook",
     videoPaths: {
